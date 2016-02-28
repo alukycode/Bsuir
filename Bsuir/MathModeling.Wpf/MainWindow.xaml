@@ -1,0 +1,14 @@
+﻿<Window x:Class="MathModeling.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        xmlns:local="clr-namespace:MathModeling.Wpf"
+        Title="Example 1 (WPF)" Height="333.75" Width="561.25">
+    <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
+        <oxy:PlotView Model="{Binding MyModel}" Margin="0,37,0,0"/>
+    </Grid>
+</Window>
