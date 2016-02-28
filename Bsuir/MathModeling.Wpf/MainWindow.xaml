@@ -3,12 +3,48 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:local="clr-namespace:MathModeling.Wpf"
-        Title="Example 1 (WPF)" Height="333.75" Width="561.25">
+        Title="Математическое моделирование" Height="400" Width="700">
     <Window.DataContext>
-        <local:MainViewModel/>
+        <local:Lab1ViewModel/>
     </Window.DataContext>
-    <Grid>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
-        <oxy:PlotView Model="{Binding MyModel}" Margin="0,37,0,0"/>
+    <Grid Margin="10,10,10,10">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="64px"/>
+            <RowDefinition />
+            <RowDefinition Height="64px" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <oxy:PlotView Grid.Row="0" Grid.Column="0" Model="{Binding ChartModels[0]}" />
+        <TextBlock Margin="25,0,0,0" Grid.Row="1" Grid.Column="0">
+            N = <TextBlock Text="{Binding Stats[0].N }"></TextBlock><LineBreak />
+            M = <TextBlock Text="{Binding Stats[0].M, StringFormat=N2 }"></TextBlock><LineBreak />
+            D = <TextBlock Text="{Binding Stats[0].D, StringFormat=N2 }"></TextBlock><LineBreak />
+            R = <TextBlock Text="{Binding Stats[0].R, StringFormat=N2 }"></TextBlock>
+        </TextBlock>
+        <oxy:PlotView Grid.Row="2" Grid.Column="0" Model="{Binding ChartModels[1]}" />
+        <TextBlock Margin="25,0,0,0" Grid.Row="3" Grid.Column="0">
+            N = <TextBlock Text="{Binding Stats[1].N }"></TextBlock><LineBreak />
+            M = <TextBlock Text="{Binding Stats[1].M, StringFormat=N2 }"></TextBlock><LineBreak />
+            D = <TextBlock Text="{Binding Stats[1].D, StringFormat=N2 }"></TextBlock><LineBreak />
+            R = <TextBlock Text="{Binding Stats[1].R, StringFormat=N2 }"></TextBlock>
+        </TextBlock>
+        <oxy:PlotView Grid.Row="0" Grid.Column="1" Model="{Binding ChartModels[2]}" />
+        <TextBlock Margin="25,0,0,0" Grid.Row="1" Grid.Column="1">
+            N = <TextBlock Text="{Binding Stats[2].N }"></TextBlock><LineBreak />
+            M = <TextBlock Text="{Binding Stats[2].M, StringFormat=N2 }"></TextBlock><LineBreak />
+            D = <TextBlock Text="{Binding Stats[2].D, StringFormat=N2 }"></TextBlock><LineBreak />
+            R = <TextBlock Text="{Binding Stats[2].R, StringFormat=N2 }"></TextBlock>
+        </TextBlock>
+        <oxy:PlotView Grid.Row="2" Grid.Column="1" Model="{Binding ChartModels[3]}" />
+        <TextBlock Margin="25,0,0,0" Grid.Row="3" Grid.Column="1">
+            N = <TextBlock Text="{Binding Stats[3].N }"></TextBlock><LineBreak />
+            M = <TextBlock Text="{Binding Stats[3].M, StringFormat=N2 }"></TextBlock><LineBreak />
+            D = <TextBlock Text="{Binding Stats[3].D, StringFormat=N2 }"></TextBlock><LineBreak />
+            R = <TextBlock Text="{Binding Stats[3].R, StringFormat=N2 }"></TextBlock>
+        </TextBlock>
     </Grid>
 </Window>
