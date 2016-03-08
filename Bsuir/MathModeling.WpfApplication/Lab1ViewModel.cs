@@ -1,13 +1,21 @@
 ﻿using System.Collections.Generic;
-using MathModeling.Lab1;
+using MathModeling.WpfApplication.Lab1;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 
-namespace MathModeling.Wpf
+namespace MathModeling.WpfApplication
 {
     public class Lab1ViewModel
     {
+        public IList<PlotModel> ChartModels { get; private set; }
+
+        public IList<StatisticalAnalysis> Stats { get; private set; }
+
+        public string Title { get; private set; }
+
+        public string Subtitle { get; private set; }
+
         public Lab1ViewModel()
         {
             this.Title = "Лабораторная работа 1";
@@ -15,8 +23,8 @@ namespace MathModeling.Wpf
 
             var plotStatsList = new List<StatisticalAnalysis>
             {
-                new StatisticalAnalysis(new SquareRandom(1994), 20, 5, 2),
-                new StatisticalAnalysis(new SquareRandom(2016), 100, 5, 2),
+                new StatisticalAnalysis(new SquareRandom(1994), 100, 5, 2),
+                new StatisticalAnalysis(new SquareRandom(2016), 1000, 5, 2),
                 new StatisticalAnalysis(new CongruentRandom(32768, 32749, 1), 100, 5, 2),
                 new StatisticalAnalysis(new CongruentRandom(65536, 32749, 1), 1000, 5, 2)
             };
@@ -47,14 +55,5 @@ namespace MathModeling.Wpf
 
             this.Stats = plotStatsList;
         }
-
-        public IList<PlotModel> ChartModels { get; private set; }
-
-        public IList<StatisticalAnalysis> Stats { get; private set; }
-
-        public string Title { get; private set; }
-
-        public string Subtitle { get; private set; }
-
     }
 }

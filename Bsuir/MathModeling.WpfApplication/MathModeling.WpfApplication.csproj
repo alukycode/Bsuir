@@ -7,8 +7,8 @@
     <ProjectGuid>{902ED4D3-6F03-488F-9D58-87EF81A1F806}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MathModeling.Wpf</RootNamespace>
-    <AssemblyName>MathModeling.Wpf</AssemblyName>
+    <RootNamespace>MathModeling.WpfApplication</RootNamespace>
+    <AssemblyName>MathModeling.WpfApplication</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -61,7 +61,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Lab1Window.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -70,8 +70,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Lab1ViewModel.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Lab1\CongruentRandom.cs" />
+    <Compile Include="Lab1\IntervalData.cs" />
+    <Compile Include="Lab1\IRandomGenerator.cs" />
+    <Compile Include="Lab1\SquareRandom.cs" />
+    <Compile Include="Lab1\StatisticalAnalysis.cs" />
+    <Compile Include="Lab1Window.xaml.cs">
+      <DependentUpon>Lab1Window.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -101,12 +106,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MathModeling.Lab1\MathModeling.Lab1.csproj">
-      <Project>{2b1113b6-e0b1-44bb-9d01-e5704dbac881}</Project>
-      <Name>MathModeling.Lab1</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
