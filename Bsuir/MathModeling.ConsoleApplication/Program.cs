@@ -8,7 +8,7 @@ namespace MathModeling.ConsoleApplication
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var culture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
             culture.NumberFormat.NumberDecimalSeparator = ".";
@@ -18,6 +18,8 @@ namespace MathModeling.ConsoleApplication
             Lab2.ImitationComplexIndependent();
             Lab2.ImitationDependent();
             Lab2.ImitationFullGroup();
+
+            Lab2.PiratesGame();
 
             Console.ReadLine();
         }

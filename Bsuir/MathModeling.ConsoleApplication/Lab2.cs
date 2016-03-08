@@ -167,5 +167,57 @@ namespace MathModeling.ConsoleApplication
 
             Console.WriteLine();
         }
+
+        public static void PiratesGame()
+        {
+            Console.Write("Количество игр: ");
+            var gamesCount = ConsoleHelper.Input(1, int.MaxValue, 1000);
+
+            Console.Write("Стоимость одной игры: ");
+            var gamePrice = ConsoleHelper.Input(1, int.MaxValue, 1);
+
+            Console.Write("Целевой выигрыш: ");
+            var targetProfit = ConsoleHelper.Input(1, 100000, 100);
+
+            Console.Write("Предполагаемая вероятность выпадения подпиленной грани: ");
+            var estimatedProbability = ConsoleHelper.Input(0.0, 1.0, 0.5);
+
+            var diceFacesCount = 6; ////Console.Write("Сколько граней на кубике: ");
+            var peopleCount = diceFacesCount; ////Console.Write("Сколько человек играют");
+
+            Console.WriteLine("Предполагается, что на кубике 6 граней и играют 6 человек");
+
+            var maxGameProfit = gamePrice * peopleCount - gamePrice;
+            var totalAvailableProfit = maxGameProfit * gamesCount;
+            var calculatedGameProfit = (double)targetProfit / totalAvailableProfit;
+
+            // calculatedGameProfit = maxGameProfit * calculatedProbability - gamePrice * (1 - calculatedProbability)
+            // calculatedGameProfit = maxGameProfit * calculatedProbability - gamePrice * 1 - gamePrice * calculatedProbability
+            // calculatedGameProfit + gamePrice = maxGameProfit * calculatedProbability - gamePrice * calculatedProbability
+            // calculatedGameProfit + gamePrice = (maxGameProfit - gamePrice) * calculatedProbability
+            // (calculatedGameProfit + gamePrice) / (maxGameProfit - gamePrice) = calculatedProbability
+
+            var calculatedProbability = (calculatedGameProfit + gamePrice) / (maxGameProfit - gamePrice);
+
+            var random = new Random();
+            var currentMoney = 0;
+            for (var i = 0; i < gamesCount; i++)
+            {
+                var diceResult = random.NextDouble();
+                if (diceResult < estimatedProbability)
+                {
+                    currentMoney += maxGameProfit;
+                }
+                else
+                {
+                    currentMoney -= gamePrice;
+                }
+            }
+
+            Console.WriteLine("--------------");
+            Console.WriteLine("Максимально возможный выигрыш за {0} игр: {1}", gamesCount, totalAvailableProfit);
+            Console.WriteLine("При вероятности выпадения грани {1} выигрыш составил {2}", gamesCount, estimatedProbability, currentMoney);
+            Console.WriteLine("Если планируется выиграть {1} денег, вероятность выпадения должна быть {2}", gamesCount, targetProfit, calculatedProbability);
+        }
     }
 }
