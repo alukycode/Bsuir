@@ -16,7 +16,7 @@ namespace MathModeling.ConsoleApplication
             Console.WriteLine("Имитация случайного события.");
 
             Console.Write("Вероятность появления события А (0 <= Pa <= 1) = ");
-            var Pa = Convert.ToDouble(Console.ReadLine());
+            var Pa = ConsoleHelper.Input(0.0, 1.0, 0.5);
 
             Debug.Assert(Pa >= 0 && Pa <= 1);
 
@@ -44,9 +44,9 @@ namespace MathModeling.ConsoleApplication
             Console.WriteLine("Имитация сложного события.");
 
             Console.Write("Вероятность появления события А = ");
-            var Pa = Convert.ToDouble(Console.ReadLine());
+            var Pa = ConsoleHelper.Input(0.0, 1.0, 0.5);
             Console.Write("Вероятность появления события B = ");
-            var Pb = Convert.ToDouble(Console.ReadLine());
+            var Pb = ConsoleHelper.Input(0.0, 1.0, 0.5);
 
             Debug.Assert(Pa >= 0 && Pa <= 1);
             Debug.Assert(Pb >= 0 && Pb <= 1);
@@ -80,11 +80,11 @@ namespace MathModeling.ConsoleApplication
             Console.WriteLine("Имитация сложного события, состоящего из зависимых событий.");
 
             Console.Write("Вероятность появления события А = ");
-            var Pa = Convert.ToDouble(Console.ReadLine());
+            var Pa = ConsoleHelper.Input(0.0, 1.0, 0.2); 
             Console.Write("Вероятность появления события B = ");
-            var Pb = Convert.ToDouble(Console.ReadLine());
+            var Pb = ConsoleHelper.Input(0.0, 1.0, 0.4);
             Console.Write("Условная вероятность появления события В, когда событие А произошло = ");
-            var PposAposB = Convert.ToDouble(Console.ReadLine());
+            var PposAposB = ConsoleHelper.Input(0.0, 1.0, 0.5);
 
             Debug.Assert(Pa >= 0 && Pa <= 1);
             Debug.Assert(Pb >= 0 && Pb <= 1);
@@ -131,13 +131,13 @@ namespace MathModeling.ConsoleApplication
             Console.WriteLine("Имитация событий, составлющих полную группу.");
 
             Console.Write("Число событий = ");
-            var eventsCount = Convert.ToInt32(Console.ReadLine());
+            var eventsCount = ConsoleHelper.Input(1, 100, 5);
 
             var eventsProbability = new double[eventsCount];
             for (var i = 0; i < eventsCount - 1; i++)
             {
                 Console.Write("Вероятность появления {0} события = ", i + 1);
-                eventsProbability[i] = Convert.ToDouble(Console.ReadLine());
+                eventsProbability[i] = ConsoleHelper.Input(0.0, 1.0, 0.1);
             }
             var lastEventProbability = 1 - eventsProbability.Sum();
             eventsProbability[eventsCount - 1] = lastEventProbability;
