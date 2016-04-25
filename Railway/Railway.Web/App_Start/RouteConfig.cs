@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,6 +10,9 @@ namespace Railway.Web
 {
     public class RouteConfig
     {
+        public static string DefaultController = "Railway";
+        public static string DefaultAction = "SelectRoute";
+
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
@@ -16,7 +20,7 @@ namespace Railway.Web
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = DefaultController, action = DefaultAction, id = UrlParameter.Optional }
             );
         }
     }

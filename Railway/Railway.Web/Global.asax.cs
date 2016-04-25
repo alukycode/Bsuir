@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Railway.Repositories;
 
 namespace Railway.Web
 {
@@ -12,10 +13,15 @@ namespace Railway.Web
     {
         protected void Application_Start()
         {
+            System.Data.Entity.Database.SetInitializer(new RailwaySeedData());
+
             AreaRegistration.RegisterAllAreas();
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            // Autofac and Automapper configurations
+            Bootstrapper.Run();
         }
     }
 }

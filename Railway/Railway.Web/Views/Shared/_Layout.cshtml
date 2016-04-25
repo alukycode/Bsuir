@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Styles/css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
@@ -17,13 +17,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Railway", RouteConfig.DefaultAction, RouteConfig.DefaultController, new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Route", "SelectRoute", "Railway")</li>
+                    <li>@Html.ActionLink("Train", "SelectTrain", "Railway")</li>
+                    <li>@Html.ActionLink("Car", "SelectCar", "Railway")</li>
+                    <li>@Html.ActionLink("Passengers", "SelectPassenger", "Railway")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -39,6 +40,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/knockout")
     @RenderSection("scripts", required: false)
 </body>
 </html>

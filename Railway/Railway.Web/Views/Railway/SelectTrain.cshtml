@@ -1,0 +1,60 @@
+﻿@model Railway.Web.Models.SelectTrain.SelectTrainViewModel
+
+@{
+    ViewBag.Title = "SelectTrain";
+}
+
+<ol class="breadcrumb">
+    
+    <li>Route</li>
+    <li class="active">Train</li>
+    <li>Car</li>
+    <li>Passengers</li>
+</ol>
+
+<h2>Select the train</h2>
+
+<div>Passenger's route: @Model.StartStationName - @Model.DestionationStationName</div>
+<div>Departure date: @Model.DepartureDate</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <tr>
+            <th>X</th>
+            <th>Train</th>
+            <th>Departure</th>
+            <th>Arrival</th>
+            <th>Point-to-point time</th>
+            @foreach (var carTypeName in Model.Trains.SelectMany(x => x.Cars).Select(x => x.CarTypeName).Distinct())
+            {
+                <th>@carTypeName</th>
+            }
+        </tr>
+        @foreach (var train in Model.Trains)
+        {
+            <tr>
+                <td>
+                    @*<div class="checkbox">
+                        <label>*@
+                    <input type="checkbox">
+                    @*</label>
+                        </div>*@
+                </td>
+                <td>@train.TrainNumber</td>
+                <td>@train.DepartureTime</td>
+                @foreach (var car in train.Cars)
+                {
+                    <td>
+                        @car.AvailableSeatCount
+                        <br />
+                        <span class="text-danger">@car.Cost</span>
+                    </td>
+                    
+                }
+            </tr>
+        }
+    </table>
+</div>
+
+<button class="btn btn-default">To the beginning</button>
+<button class="btn btn-primary">Continue</button>

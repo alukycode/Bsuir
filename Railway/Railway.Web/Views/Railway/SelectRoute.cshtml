@@ -1,0 +1,71 @@
+﻿@model Railway.Web.Models.SelectRoute.SelectRouteViewModel
+
+@{
+    ViewBag.Title = "SelectRoute";
+}
+
+@section Scripts {
+    <script>var ServerModel = (@Html.Raw(Json.Encode(Model)));</script>
+    <script src="~/Scripts/railway/select-route.js"></script>
+}
+
+
+
+<ol class="breadcrumb">
+    <li class="active">Route</li>
+    <li>Train</li>
+    <li>Car</li>
+</ol>
+
+<h2>Select your route </h2>
+
+@*<form class="form-horizontal" data-bind="submit: submitForm">*@
+<form class="form-horizontal" action="@Model.NextStepUrl" method="get">
+    @*@Html.AntiForgeryToken();*@
+
+    <div class="form-group">
+        <label class="control-label col-sm-2">Departure point</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="DepartureStation" data-bind="textInput: input.departureStationName"/>
+        </div>
+    </div>
+    @*<div class="form-group">
+        <label class="control-label col-sm-2">top 5 available stations for your query</label>
+        <div class="col-sm-10">
+        </div>
+    </div>*@
+    <div class="form-group">
+        <label class="control-label col-sm-2">Destination point</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="DestinationStation" data-bind="textInput: input.destinationStationName" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" class="btn btn-default" data-bind="click: swapStations">Swap stations</button>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">Departure date</label>
+        <div class="col-sm-10">
+            <input type="date" class="form-control" name="DepartureDate" data-bind="textInput: input.departureDate" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="OnlyWithElectronicRegistration" data-bind="checked: input.onlyWithElectronicRegistration">
+                    Only trains with electronic registration
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-md-10">
+            <button type="button" class="btn btn-default" data-bind="click: cancel">Cancel</button>
+            <button type="submit" class="btn btn-primary">Continue</button>
+        </div>
+    </div>
+</form>
