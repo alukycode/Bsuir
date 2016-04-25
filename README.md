@@ -4,6 +4,8 @@
 
 ### Math Modeling
 
-*.NET, WPF, OxyPlot*
+*.NET*
 
-Lab 1
+Lab 1 - *WPF, OxyPlot*
+
+Lab 2 - *Console Application*
