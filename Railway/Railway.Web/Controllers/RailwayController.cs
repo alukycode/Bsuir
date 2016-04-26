@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Railway.Repositories;
-using Railway.Repositories.Infrastructure;
-using Railway.Services;
+using Railway.Data.Services;
 using Railway.Web.Models;
 using Railway.Web.Models.SelectCar;
 using Railway.Web.Models.SelectPassenger;
@@ -79,7 +75,7 @@ namespace Railway.Web.Controllers
                                 AvailableSeatCount = 5
                             }
                         }
-                    },
+                    }
                 }
             };
 
@@ -88,7 +84,7 @@ namespace Railway.Web.Controllers
 
         public ActionResult SelectCar()
         {
-            var carTypes = 
+            var cars = carService.GetAllCars();
             var model = new SelectCarViewModel
             {
                 ArrivalTime = DateTime.Now,
@@ -106,13 +102,13 @@ namespace Railway.Web.Controllers
                             {
                                 Index = 4,
                                 SeatCount = 123,
-                                SeatIndexes = new List<int> { 1, 2, 3, 4 },
+                                SeatIndexes = new List<int> { 1, 2, 3, 4 }
                             },
                             new SelectCarViewModel.CarTypesData.CarData
                             {
                                 Index = 5,
                                 SeatCount = 4,
-                                SeatIndexes = new List<int> { 4, 5, 6, 7 },
+                                SeatIndexes = new List<int> { 4, 5, 6, 7 }
                             }
                         }
                     },
@@ -126,13 +122,13 @@ namespace Railway.Web.Controllers
                             {
                                 Index = 7,
                                 SeatCount = 77,
-                                SeatIndexes = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 },
+                                SeatIndexes = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 }
                             },
                             new SelectCarViewModel.CarTypesData.CarData
                             {
                                 Index = 8,
                                 SeatCount = 88,
-                                SeatIndexes = new List<int> { 4, 5, 6, 7 },
+                                SeatIndexes = new List<int> { 4, 5, 6, 7 }
                             }
                         }
                     }
@@ -144,10 +140,7 @@ namespace Railway.Web.Controllers
 
         public ActionResult SelectPassenger()
         {
-            var model = new SelectPassengerViewModel
-            {
-                
-            };
+            var model = new SelectPassengerViewModel();
             return View(model);
         }
     }

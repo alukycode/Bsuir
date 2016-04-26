@@ -2,9 +2,8 @@
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
-using Railway.Repositories.Infrastructure;
-using Railway.Repositories.Repositories;
-using Railway.Services;
+using Railway.Data;
+using Railway.Data.Services;
 
 namespace Railway.Web
 {
@@ -19,20 +18,15 @@ namespace Railway.Web
         {
             var builder = new ContainerBuilder();
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
-            builder.RegisterType<DbFactory>().As<IDbFactory>().InstancePerRequest();
-
-            // Repositories
-            builder.RegisterAssemblyTypes(typeof(CarRepository).Assembly)
-                .Where(t => t.Name.EndsWith("Repository"))
-                .AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterType<RailwayContext>().AsSelf().InstancePerRequest();
 
             // Services
             builder.RegisterAssemblyTypes(typeof(CarService).Assembly)
                .Where(t => t.Name.EndsWith("Service"))
-               .AsImplementedInterfaces().InstancePerRequest();
+               .AsImplementedInterfaces()
+               .InstancePerRequest();
 
-            IContainer container = builder.Build();
+            var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
     }

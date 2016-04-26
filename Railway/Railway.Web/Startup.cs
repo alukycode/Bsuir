@@ -1,7 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
+using Railway.Web;
 
-[assembly: OwinStartupAttribute(typeof(Railway.Web.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
 namespace Railway.Web
 {
     public partial class Startup
