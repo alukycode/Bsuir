@@ -1,15 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Railway.Data.Models;
+using Railway.Data.Entities;
 
 namespace Railway.Data.Services
 {
-    public interface ICarService
-    {
-        IEnumerable<Car> GetAllCars();
-    }
-
-    public class CarService : ICarService
+    public class CarService
     {
         private readonly RailwayContext context;
 

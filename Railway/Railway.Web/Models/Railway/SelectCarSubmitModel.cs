@@ -1,4 +1,4 @@
-﻿namespace Railway.Web.Models.SelectCar
+﻿namespace Railway.Web.Models.Railway
 {
     public class SelectCarSubmitModel
     {

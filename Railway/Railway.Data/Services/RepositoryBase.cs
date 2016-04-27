@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using Railway.Data;
 
-namespace Railway.Repositories.Infrastructure
+namespace Railway.Data.Services
 {
     public abstract class RepositoryBase<T> where T : class
     {

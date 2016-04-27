@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Railway.Web.Models.SelectPassenger
+namespace Railway.Web.Models.Railway
 {
     public class SelectPassengerViewModel
     {

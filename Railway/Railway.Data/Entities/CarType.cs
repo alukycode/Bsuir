@@ -1,4 +1,4 @@
-namespace Railway.Data.Models
+namespace Railway.Data.Entities
 {
     public class CarType
     {

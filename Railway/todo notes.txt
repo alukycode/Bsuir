@@ -1,0 +1,1 @@
+use POST/Redirect/GET pattern between steps with get parameters in url (it is looks okay and data is not private)

@@ -1,0 +1,47 @@
+1. Code First: how to add a relationship without adding a navigation property
+http://stackoverflow.com/questions/5217441/ef4-code-first-how-to-add-a-relationship-without-adding-a-navigation-property
+
+I believe you always need navigation property on at least one side when using code-first. Then you will be able to map it
+
+
+
+2. In one-to-one relation one end must be principal and second end must be dependent.
+- Principal end is the one which will be inserted first and which can exist without the dependent one.
+- Dependent end is the one which must be inserted after the principal because it has foreign key to the principal.
+
+
+3.
+Q: This is what I have today:
+
+modelBuilder.Entity<User>()
+    .HasOptional(p => p.DealDevice)
+    .WithRequired(c => c.User)
+    .WillCascadeOnDelete(false);
+
+What I would like is to have the related DealDevice rows be deleted if the user is deleted so that I can just delete the user and have everything related go away.
+Can I just change WillCascadeOnDelete(false) to WillCascadeOnDelete(true) or will that delete the user if the deal is deleted?
+
+A: You are correct: to cascade deletes from User to DealDevice just use WillCascadeOnDelete(true). It's not going to delete the User if a DealDevice is deleted, only the other way around.
+
+modelBuilder.Entity<User>()
+    .HasOptional(p => p.DealDevice)
+    .WithRequired(c => c.User)
+    .WillCascadeOnDelete();
+
+Note: you don't have to specify the parameter to WillCascadeOnDelete() if you want to cascade deletes as there's an overload implicitly setting it to true.
+
+
+4.
+This is the problem (from your git repository, class EpisodeMap):
+
+HasRequired(x => x.Show)
+    .WithMany(x => x.Episodes)
+    .HasForeignKey(x => x.EpisodeID);
+
+EpisodeID is the PK in Episode and EF expects a one-to-one mapping in this case without an Episodes collection but an Episode reference instead ("upper bound of multiplicity = 1").
+
+For a one-to-many relationship it has to be:
+
+HasRequired(x => x.Show)
+    .WithMany(x => x.Episodes)
+    .HasForeignKey(x => x.ShowID);

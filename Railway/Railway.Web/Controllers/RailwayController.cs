@@ -3,80 +3,90 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using Railway.Data.Services;
 using Railway.Web.Models;
-using Railway.Web.Models.SelectCar;
-using Railway.Web.Models.SelectPassenger;
-using Railway.Web.Models.SelectRoute;
-using Railway.Web.Models.SelectTrain;
+using Railway.Web.Models.Railway;
 
 namespace Railway.Web.Controllers
 {
     public class RailwayController : Controller
     {
-        private readonly ICarService carService;
+        private readonly CarService carService;
+        private readonly RailwayService railwayService;
 
-        public RailwayController(ICarService carService)
+        public RailwayController(CarService carService, RailwayService railwayService)
         {
             this.carService = carService;
+            this.railwayService = railwayService;
         }
 
+        [HttpGet]
         public ActionResult SelectRoute()
         {
             var model = new SelectRouteViewModel
             {
-                NextStepUrl = Url.Action("SelectTrain")
+                NextStepUrl = Url.Action("SelectTrain"),
+                AvailableRoutes = railwayService.GetAvailableRoutes(),
             };
 
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult SelectRoute(SelectRouteSubmitModel model)
+        {
+            return RedirectToAction("SelectTrain", model);
+        }
+
         public ActionResult SelectTrain(SelectRouteSubmitModel submitModel)
         {
+            var startStation = railwayService.GetStation(submitModel.DepartureStation);
+            var destinationStation = railwayService.GetStation(submitModel.DestionationStation);
+
+            var dailyRoutes = railwayService.GetDailyRoutes(submitModel.DepartureDate, startStation, destinationStation);
+            var trains = new List<SelectTrainViewModel.TrainData>();
+            foreach (var dailyRoute in dailyRoutes)
+            {
+                var startTime = railwayService.CalculateArrivalDepartureTime(dailyRoute, startStation);
+                var destionationTime = railwayService.CalculateArrivalDepartureTime(dailyRoute, destinationStation);
+
+                var cars = new List<SelectTrainViewModel.TrainData.CarData>();
+                foreach (var car in dailyRoute.Route.Train.Cars)
+                {
+                    var carData = new SelectTrainViewModel.TrainData.CarData
+                    {
+                        CarTypeName = car.CarType.TypeName,
+                        Cost = railwayService.CalculateCost(dailyRoute, startStation, destinationStation, car.CarType),
+                        AvailableSeatCount = railwayService.CalculateAvailableSeats(car),
+                    };
+
+                    cars.Add(carData);
+                }
+
+                var trainData = new SelectTrainViewModel.TrainData
+                {
+                    TrainNumber = dailyRoute.Route.Train.TrainNumber,
+                    DepartureTime = startTime,
+                    ArrivalTime = destionationTime,
+                    TripTime = destionationTime - startTime,
+                    IsDeLuxe = dailyRoute.Route.Train.IsDeLuxe,
+                    IsElectronicRegistrationAvailable = dailyRoute.Route.Train.IsElectronicRegistrationAvailable,
+                    IsExpress = dailyRoute.Route.Train.IsElectronicRegistrationAvailable,
+                    Cars = cars
+                };
+
+                trains.Add(trainData);
+            }
+
             var model = new SelectTrainViewModel
             {
-                StartStationName = submitModel.DepartureStation,
-                Trains = new List<SelectTrainViewModel.TrainData>
+                RouteData = new SelectTrainViewModel.ConfirmedRouteData
                 {
-                    new SelectTrainViewModel.TrainData
-                    {
-                        TrainNumber = "111",
-                        DepartureTime = submitModel.DepartureDate,
-                        Cars = new List<SelectTrainViewModel.TrainData.CarData>
-                        {
-                            new SelectTrainViewModel.TrainData.CarData
-                            {
-                                CarTypeName = "Плацкарт",
-                                Cost = 50000,
-                                AvailableSeatCount = 15
-                            },
-                            new SelectTrainViewModel.TrainData.CarData
-                            {
-                                CarTypeName = "Общий",
-                                Cost = 35000,
-                                AvailableSeatCount = 4
-                            }
-                        }
-                    },
-                    new SelectTrainViewModel.TrainData
-                    {
-                        TrainNumber = "222",
-                        DepartureTime = DateTime.Now.AddDays(123),
-                        Cars = new List<SelectTrainViewModel.TrainData.CarData>
-                        {
-                            new SelectTrainViewModel.TrainData.CarData
-                            {
-                                CarTypeName = "Сидячие",
-                                Cost = 350,
-                                AvailableSeatCount = 245
-                            },
-                            new SelectTrainViewModel.TrainData.CarData
-                            {
-                                CarTypeName = "Общий",
-                                Cost = 35000,
-                                AvailableSeatCount = 5
-                            }
-                        }
-                    }
-                }
+                    StartStationId = startStation.StationId,
+                    StartStationName = startStation.StationName,
+                    DestinationStationId = destinationStation.StationId,
+                    DestionationStationName = destinationStation.StationName,
+                    DepartureDate = submitModel.DepartureDate
+                },
+                Trains = trains
             };
 
             return View(model);

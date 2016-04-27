@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using Railway.Data.Models;
+using Railway.Data.Entities;
 
 namespace Railway.Data
 {
@@ -9,12 +9,14 @@ namespace Railway.Data
     {
         protected override void Seed(RailwayContext context)
         {
-            context.Trains.AddRange(GetTrains());
             context.CarTypes.AddRange(GetCarTypes());
+            context.Stations.AddRange(GetStations());
+            context.SaveChanges();
+            context.Trains.AddRange(GetTrains());
             context.SaveChanges();
             context.Cars.AddRange(GetCars());
+            context.SaveChanges();
             context.Routes.AddRange(GetRoutes());
-            context.Stations.AddRange(GetStations());
             context.SaveChanges();
             context.RouteStations.AddRange(GetRouteStations());
             context.DailyRoutes.AddRange(GetDailyRoutes());
@@ -174,12 +176,12 @@ namespace Railway.Data
                 new RouteStation { RouteId = 1, StationId = 9, MinutesFromStart = 60, StationOrder = 5 },
                 new RouteStation { RouteId = 1, StationId = 12, MinutesFromStart = 75, StationOrder = 6 },
 
-                new RouteStation { RouteId = 2, StationId = 1, MinutesFromStart = 0, StationOrder = 6 },
-                new RouteStation { RouteId = 2, StationId = 2, MinutesFromStart = 15, StationOrder = 5 },
-                new RouteStation { RouteId = 2, StationId = 6, MinutesFromStart = 30, StationOrder = 4 },
-                new RouteStation { RouteId = 2, StationId = 7, MinutesFromStart = 45, StationOrder = 3 },
-                new RouteStation { RouteId = 2, StationId = 9, MinutesFromStart = 60, StationOrder = 2 },
-                new RouteStation { RouteId = 2, StationId = 12, MinutesFromStart = 75, StationOrder = 1 },
+                new RouteStation { RouteId = 2, StationId = 1, MinutesFromStart = 75, StationOrder = 6 },
+                new RouteStation { RouteId = 2, StationId = 2, MinutesFromStart = 60, StationOrder = 5 },
+                new RouteStation { RouteId = 2, StationId = 6, MinutesFromStart = 45, StationOrder = 4 },
+                new RouteStation { RouteId = 2, StationId = 7, MinutesFromStart = 30, StationOrder = 3 },
+                new RouteStation { RouteId = 2, StationId = 9, MinutesFromStart = 15, StationOrder = 2 },
+                new RouteStation { RouteId = 2, StationId = 12, MinutesFromStart = 0, StationOrder = 1 },
 
                 new RouteStation { RouteId = 3, StationId = 19, MinutesFromStart = 0, StationOrder = 1 },
                 new RouteStation { RouteId = 3, StationId = 20, MinutesFromStart = 15, StationOrder = 2 },
@@ -188,12 +190,12 @@ namespace Railway.Data
                 new RouteStation { RouteId = 3, StationId = 16, MinutesFromStart = 60, StationOrder = 5 },
                 new RouteStation { RouteId = 3, StationId = 17, MinutesFromStart = 75, StationOrder = 6 },
 
-                new RouteStation { RouteId = 4, StationId = 19, MinutesFromStart = 0, StationOrder = 6 },
-                new RouteStation { RouteId = 4, StationId = 20, MinutesFromStart = 15, StationOrder = 5 },
-                new RouteStation { RouteId = 4, StationId = 9, MinutesFromStart = 30, StationOrder = 4 },
-                new RouteStation { RouteId = 4, StationId = 18, MinutesFromStart = 45, StationOrder = 3 },
-                new RouteStation { RouteId = 4, StationId = 16, MinutesFromStart = 60, StationOrder = 2 },
-                new RouteStation { RouteId = 4, StationId = 17, MinutesFromStart = 75, StationOrder = 1 },
+                new RouteStation { RouteId = 4, StationId = 19, MinutesFromStart = 75, StationOrder = 6 },
+                new RouteStation { RouteId = 4, StationId = 20, MinutesFromStart = 60, StationOrder = 5 },
+                new RouteStation { RouteId = 4, StationId = 9, MinutesFromStart = 45, StationOrder = 4 },
+                new RouteStation { RouteId = 4, StationId = 18, MinutesFromStart = 30, StationOrder = 3 },
+                new RouteStation { RouteId = 4, StationId = 16, MinutesFromStart = 15, StationOrder = 2 },
+                new RouteStation { RouteId = 4, StationId = 17, MinutesFromStart = 0, StationOrder = 1 },
 
                 new RouteStation { RouteId = 5, StationId = 13, MinutesFromStart = 0, StationOrder = 1 },
                 new RouteStation { RouteId = 5, StationId = 15, MinutesFromStart = 15, StationOrder = 2 },
@@ -205,15 +207,15 @@ namespace Railway.Data
                 new RouteStation { RouteId = 5, StationId = 1, MinutesFromStart = 105, StationOrder = 8 },
                 new RouteStation { RouteId = 5, StationId = 3, MinutesFromStart = 120, StationOrder = 9 },
 
-                new RouteStation { RouteId = 6, StationId = 13, MinutesFromStart = 0, StationOrder = 9 },
-                new RouteStation { RouteId = 6, StationId = 15, MinutesFromStart = 15, StationOrder = 8 },
-                new RouteStation { RouteId = 6, StationId = 20, MinutesFromStart = 30, StationOrder = 7 },
-                new RouteStation { RouteId = 6, StationId = 4, MinutesFromStart = 45, StationOrder = 6 },
+                new RouteStation { RouteId = 6, StationId = 13, MinutesFromStart = 120, StationOrder = 9 },
+                new RouteStation { RouteId = 6, StationId = 15, MinutesFromStart = 105, StationOrder = 8 },
+                new RouteStation { RouteId = 6, StationId = 20, MinutesFromStart = 90, StationOrder = 7 },
+                new RouteStation { RouteId = 6, StationId = 4, MinutesFromStart = 75, StationOrder = 6 },
                 new RouteStation { RouteId = 6, StationId = 7, MinutesFromStart = 60, StationOrder = 5 },
-                new RouteStation { RouteId = 6, StationId = 6, MinutesFromStart = 75, StationOrder = 4 },
-                new RouteStation { RouteId = 6, StationId = 2, MinutesFromStart = 90, StationOrder = 3 },
-                new RouteStation { RouteId = 6, StationId = 1, MinutesFromStart = 105, StationOrder = 2 },
-                new RouteStation { RouteId = 6, StationId = 3, MinutesFromStart = 120, StationOrder = 1 },
+                new RouteStation { RouteId = 6, StationId = 6, MinutesFromStart = 45, StationOrder = 4 },
+                new RouteStation { RouteId = 6, StationId = 2, MinutesFromStart = 30, StationOrder = 3 },
+                new RouteStation { RouteId = 6, StationId = 1, MinutesFromStart = 15, StationOrder = 2 },
+                new RouteStation { RouteId = 6, StationId = 3, MinutesFromStart = 0, StationOrder = 1 },
 
                 new RouteStation { RouteId = 7, StationId = 16, MinutesFromStart = 0, StationOrder = 1 },
                 new RouteStation { RouteId = 7, StationId = 18, MinutesFromStart = 15, StationOrder = 2 },
@@ -223,13 +225,13 @@ namespace Railway.Data
                 new RouteStation { RouteId = 7, StationId = 7, MinutesFromStart = 75, StationOrder = 6 },
                 new RouteStation { RouteId = 7, StationId = 9, MinutesFromStart = 90, StationOrder = 7 },
 
-                new RouteStation { RouteId = 8, StationId = 16, MinutesFromStart = 0, StationOrder = 7 },
-                new RouteStation { RouteId = 8, StationId = 18, MinutesFromStart = 15, StationOrder = 6 },
-                new RouteStation { RouteId = 8, StationId = 8, MinutesFromStart = 30, StationOrder = 5 },
+                new RouteStation { RouteId = 8, StationId = 16, MinutesFromStart = 90, StationOrder = 7 },
+                new RouteStation { RouteId = 8, StationId = 18, MinutesFromStart = 75, StationOrder = 6 },
+                new RouteStation { RouteId = 8, StationId = 8, MinutesFromStart = 60, StationOrder = 5 },
                 new RouteStation { RouteId = 8, StationId = 5, MinutesFromStart = 45, StationOrder = 4 },
-                new RouteStation { RouteId = 8, StationId = 6, MinutesFromStart = 60, StationOrder = 3 },
-                new RouteStation { RouteId = 8, StationId = 7, MinutesFromStart = 75, StationOrder = 2 },
-                new RouteStation { RouteId = 8, StationId = 9, MinutesFromStart = 90, StationOrder = 1 },
+                new RouteStation { RouteId = 8, StationId = 6, MinutesFromStart = 30, StationOrder = 3 },
+                new RouteStation { RouteId = 8, StationId = 7, MinutesFromStart = 15, StationOrder = 2 },
+                new RouteStation { RouteId = 8, StationId = 9, MinutesFromStart = 0, StationOrder = 1 },
             };
         }
 

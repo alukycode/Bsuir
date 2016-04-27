@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Railway.Web.Models.SelectCar
+namespace Railway.Web.Models.Railway
 {
     public class SelectCarViewModel
     {
@@ -33,7 +33,7 @@ namespace Railway.Web.Models.SelectCar
             {
                 public int Index { get; set; }
 
-                public int SeatCount { get; set; } //todo: можно было бы учитывать lower/upper/lowerside/upperside места
+                public int SeatCount { get; set; }
 
                 public IList<int> SeatIndexes { get; set; }
             }

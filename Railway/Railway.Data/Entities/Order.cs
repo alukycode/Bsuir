@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
 
-namespace Railway.Data.Models
+namespace Railway.Data.Entities
 {
     public class Order
     {
@@ -39,9 +39,18 @@ namespace Railway.Data.Models
     {
         public OrderConfiguration()
         {
-            HasMany(x => x.OrderPassengers)
-                .WithRequired(x => x.Order)
-                .WillCascadeOnDelete();
+            HasMany(x => x.OrderPassengers).WithRequired(x => x.Order).WillCascadeOnDelete();
+            HasRequired(x => x.DailyRoute).WithMany().WillCascadeOnDelete(false);
+
+            HasRequired(x => x.TripStartStation)
+                .WithMany()
+                .HasForeignKey(x => x.TripStartStationId)
+                .WillCascadeOnDelete(false);
+
+            HasRequired(x => x.TripDestinationStation)
+                .WithMany()
+                .HasForeignKey(x => x.TripDestinationStationId)
+                .WillCascadeOnDelete(false);
         }
     }
 }

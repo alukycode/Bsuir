@@ -1,6 +1,5 @@
 ﻿using System.Data.Entity;
-using Railway.Data.Configuration;
-using Railway.Data.Models;
+using Railway.Data.Entities;
 
 namespace Railway.Data
 {
@@ -25,10 +24,7 @@ namespace Railway.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //modelBuilder.Configurations.Add(new CarConfiguration());
-            modelBuilder.Configurations.Add(new UserConfiguration());
-            modelBuilder.Configurations.Add(new OrderConfiguration());
-            modelBuilder.Configurations.Add(new OrderPassengerConfiguration());
+            modelBuilder.Configurations.AddFromAssembly(typeof(CarConfiguration).Assembly);
         }
     }
 }

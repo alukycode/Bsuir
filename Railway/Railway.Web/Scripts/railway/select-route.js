@@ -2,9 +2,9 @@
     var self = this;
 
     this.input = {
-        departureStationName: ko.observable('Minsk'),
-        destinationStationName: ko.observable('Bobruisk'),
-        departureDate: ko.observable(),
+        departureStationName: ko.observable('Минск'),
+        destinationStationName: ko.observable('Бобруйск'),
+        departureDate: ko.observable(new Date()),
         onlyWithElectronicRegistration: ko.observable(true),
     }
 

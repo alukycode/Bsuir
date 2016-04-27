@@ -23,7 +23,8 @@ namespace Railway.Web
             // Services
             builder.RegisterAssemblyTypes(typeof(CarService).Assembly)
                .Where(t => t.Name.EndsWith("Service"))
-               .AsImplementedInterfaces()
+               //.AsImplementedInterfaces()
+               .AsSelf()
                .InstancePerRequest();
 
             var container = builder.Build();

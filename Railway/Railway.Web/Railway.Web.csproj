@@ -190,14 +190,14 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Railway\SelectCar\SelectCarSubmitModel.cs" />
-    <Compile Include="Models\Railway\SelectCar\SelectCarViewModel.cs" />
-    <Compile Include="Models\Railway\SelectPassenger\SelectPassengerSubmitModel.cs" />
-    <Compile Include="Models\Railway\SelectPassenger\SelectPassengerViewModel.cs" />
-    <Compile Include="Models\Railway\SelectRoute\SelectRouteSubmitModel.cs" />
-    <Compile Include="Models\Railway\SelectRoute\SelectRouteViewModel.cs" />
-    <Compile Include="Models\Railway\SelectTrain\SelectTrainSubmitModel.cs" />
-    <Compile Include="Models\Railway\SelectTrain\SelectTrainViewModel.cs" />
+    <Compile Include="Models\Railway\SelectCarSubmitModel.cs" />
+    <Compile Include="Models\Railway\SelectCarViewModel.cs" />
+    <Compile Include="Models\Railway\SelectPassengerSubmitModel.cs" />
+    <Compile Include="Models\Railway\SelectPassengerViewModel.cs" />
+    <Compile Include="Models\Railway\SelectRouteSubmitModel.cs" />
+    <Compile Include="Models\Railway\SelectRouteViewModel.cs" />
+    <Compile Include="Models\Railway\SelectTrainSubmitModel.cs" />
+    <Compile Include="Models\Railway\SelectTrainViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

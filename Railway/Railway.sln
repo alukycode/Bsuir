@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Railway.Web", "Railway.Web\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Railway.Data", "Railway.Data\Railway.Data.csproj", "{9E5A0844-2CE2-47EA-8EFC-B7598ABE9C57}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReadMe", "ReadMe", "{7D57A580-C63F-4298-9FE0-74F4AAD4A9A5}"
+	ProjectSection(SolutionItems) = preProject
+		Entity Framework notes.txt = Entity Framework notes.txt
+		todo notes.txt = todo notes.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

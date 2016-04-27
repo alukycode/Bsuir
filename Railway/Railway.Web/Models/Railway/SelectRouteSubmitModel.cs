@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Railway.Web.Models
+namespace Railway.Web.Models.Railway
 {
     public class SelectRouteSubmitModel
     {

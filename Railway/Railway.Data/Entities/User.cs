@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
 
-namespace Railway.Data.Models
+namespace Railway.Data.Entities
 {
     public class User
     {
@@ -29,12 +29,12 @@ namespace Railway.Data.Models
     {
         public UserConfiguration()
         {
-            //HasMany(e => e.Passengers)
-            //    .WithRequired(e => e.User)
+            HasMany(e => e.Passengers)
+                .WithRequired(e => e.User);
             //    .WillCascadeOnDelete();
 
-            //HasMany(e => e.Orders)
-            //    .WithRequired(e => e.User)
+            HasMany(e => e.Orders)
+                .WithRequired(e => e.User);
             //    .WillCascadeOnDelete();
         }
     }
