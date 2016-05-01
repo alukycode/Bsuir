@@ -2,14 +2,14 @@
 
 namespace Railway.Web.Models.Railway
 {
-    public class SelectRouteSubmitModel
+    public class SelectRouteFormModel
     {
         public string DepartureStation { get; set; }
 
-        public string DestionationStation { get; set; }
+        public string DestinationStation { get; set; }
 
         public DateTime DepartureDate { get; set; }
 
-        public bool OnlyWithElectronicRegistration { get; set; }
+        //public bool OnlyWithElectronicRegistration { get; set; }
     }
 }

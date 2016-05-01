@@ -17,19 +17,39 @@ namespace Railway.Data.Services
             this.context = context;
         }
 
-        public Station GetStation(string name)
+        public IList<CarType> GetAllCarTypes()
         {
-            return context.Stations.First(x => x.StationName.ToLower() == name.ToLower());
+            return context.CarTypes.ToList();
         }
 
-        public List<DailyRoute> GetDailyRoutes(DateTime date, Station startStation, Station destinationStation)
+        public IList<Car> GetAllCars(int dailyRouteId) // methos should also check destination and department stations ids
+        {
+            return context.DailyRoutes.Find(dailyRouteId).Route.Train.Cars.ToList();
+        }
+
+        public Station GetStation(string name)
+        {
+            return context.Stations.FirstOrDefault(x => x.StationName == name); // case insensitive
+        }
+
+        public Station GetStation(int id)
+        {
+            return context.Stations.Find(id);
+        }
+
+        public DailyRoute GetDailyRoute(int id)
+        {
+            return context.DailyRoutes.Find(id);
+        }
+
+        public List<DailyRoute> GetDailyRoutes(DateTime date, int startStationId, int destinationStationId)
         {
             var result = new List<DailyRoute>();
             var dailyRoutes = context.DailyRoutes.Where(x => x.StartDateTime >= date.Date).ToList(); // берём все ежедневные маршруты не раньше указанной даты
             foreach (var dailyRoute in dailyRoutes)
             {
-                var startRouteStation = dailyRoute.Route.RouteStations.FirstOrDefault(x => x.StationId == startStation.StationId);
-                var destinationRouteStation = dailyRoute.Route.RouteStations.FirstOrDefault(x => x.StationId == destinationStation.StationId);
+                var startRouteStation = dailyRoute.Route.RouteStations.FirstOrDefault(x => x.StationId == startStationId);
+                var destinationRouteStation = dailyRoute.Route.RouteStations.FirstOrDefault(x => x.StationId == destinationStationId);
 
                 if (startRouteStation != null && destinationRouteStation != null // если на маршруте есть обе указанные станции
                     && startRouteStation.StationOrder < destinationRouteStation.StationOrder // и станция назначения идёт после станции отправления
@@ -43,22 +63,36 @@ namespace Railway.Data.Services
             return result;
         }
 
-        public DateTime CalculateArrivalDepartureTime(DailyRoute dailyRoute, Station station)
+        public DateTime CalculateArrivalDepartureTime(DailyRoute dailyRoute, int stationId)
         {
-            var routeStation = dailyRoute.Route.RouteStations.First(x => x.StationId == station.StationId);
+            var routeStation = dailyRoute.Route.RouteStations.First(x => x.StationId == stationId);
             return dailyRoute.StartDateTime.AddMinutes(routeStation.MinutesFromStart);
         }
 
-        public double CalculateCost(DailyRoute dailyRoute, Station startStation, Station destinationStation, CarType carType)
+        public double CalculateCost(int dailyRouteId, int startStationId, int destinationStationId, CarType carType)
+        {
+            var dailyRoute = context.DailyRoutes.Find(dailyRouteId);
+            return CalculateCost(dailyRoute, startStationId, destinationStationId, carType);
+        }
+
+        public double CalculateCost(DailyRoute dailyRoute, int startStationId, int destinationStationId, CarType carType)
         {
             double cost = 0;
-            var routeStations = dailyRoute.Route.RouteStations.OrderBy(x => x.StationOrder).ToList();
+            var allRouteStations = dailyRoute.Route.RouteStations.ToList();
+            var startRouteStation = allRouteStations.First(x => x.StationId == startStationId);
+            var destinationRouteStation = allRouteStations.First(x => x.StationId == destinationStationId);
+            var routeStations = allRouteStations
+                .Where(x => x.StationOrder >= startRouteStation.StationOrder 
+                    && x.StationOrder <= destinationRouteStation.StationOrder).ToList();
+
             for (var i = 0; i < routeStations.Count - 1; i++)
             {
-                var distance = context.Distances.FirstOrDefault(x => x.StartStationId == routeStations[i].StationId && x.DestinationStationId == routeStations[i + 1].StationId);
+                var firstStationId = routeStations[i].StationId;
+                var secondStationId = routeStations[i + 1].StationId;
+                var distance = context.Distances.FirstOrDefault(x => x.StartStationId == firstStationId && x.DestinationStationId == secondStationId);
                 if (distance == null)
                 {
-                    cost += 1;
+                    cost += 1 * carType.CostRate;
                 }
                 else
                 {
@@ -69,9 +103,22 @@ namespace Railway.Data.Services
             return cost;
         }
 
+        public int CalculateAvailableSeats(DailyRoute dailyRoute, int carTypeId)
+        {
+            return dailyRoute.Route.Train.Cars.Where(x => x.CarTypeId == carTypeId).Sum(x => CalculateAvailableSeats(x));
+        }
+
         public int CalculateAvailableSeats(Car car)
         {
             return  car.CarType.SeatCount - context.OrderPassengers.Count(x => x.CarId == car.CarId);
+        }
+
+        public IList<int> GetAvailableSeatNumbers(Car car)
+        {
+            var takenSeats = context.OrderPassengers.Where(x => x.CarId == car.CarId).Select(x => x.SeatIndex).ToList();
+            var result = Enumerable.Range(1, car.CarType.SeatCount).Where(x => !takenSeats.Contains(x)).ToList();
+
+            return result;
         }
 
         public List<List<string>> GetAvailableRoutes()

@@ -1,25 +1,22 @@
-﻿@model Railway.Web.Models.Railway.SelectRouteViewModel
+﻿@using System.Globalization
+@using System.Web.Mvc.Html
+@using Railway.Data
+@model Railway.Web.Models.Railway.SelectRouteViewModel
 
 @{
     ViewBag.Title = "SelectRoute";
 }
 
 @section Scripts {
-    <script>var ServerModel = (@Html.Raw(Json.Encode(Model)));</script>
-    <script src="~/Scripts/railway/select-route.js"></script>
+    <script src="~/Scripts/select-route.js"></script>
 }
-
-
 
 <ol class="breadcrumb">
     <li class="active">Route</li>
-    <li>Train</li>
-    <li>Car</li>
 </ol>
 
 <h2>Select your route </h2>
 
-@*<form class="form-horizontal" data-bind="submit: submitForm">*@
 <form class="form-horizontal" method="post">
     @*@Html.AntiForgeryToken();*@
 
@@ -38,40 +35,44 @@
     <div class="form-group">
         <label class="control-label col-sm-2">Departure point</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" name="DepartureStation" data-bind="textInput: input.departureStationName"/>
+            @Html.TextBoxFor(x => x.FormModel.DepartureStation, new { @class = "form-control" })
+            @*<input type="text" class="form-control" name="DepartureStation"/>*@
         </div>
     </div>
     <div class="form-group">
         <label class="control-label col-sm-2">Destination point</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" name="DestinationStation" data-bind="textInput: input.destinationStationName" />
+            @*<input type="text" class="form-control" name="DestinationStation"/>*@
+            @Html.TextBoxFor(x => x.FormModel.DestinationStation, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="button" class="btn btn-default" data-bind="click: swapStations">Swap stations</button>
+            <button id="js-swap-stations" type="button" class="btn btn-default">Swap stations</button>
         </div>
     </div>
     <div class="form-group">
         <label class="control-label col-sm-2">Departure date</label>
         <div class="col-sm-10">
-            <input type="date" class="form-control" name="DepartureDate" data-bind="textInput: input.departureDate" />
+            @*<input type="date" class="form-control" name="DepartureDate" data-bind="textInput: input.departureDate" />*@
+            @Html.TextBoxFor(x => x.FormModel.DepartureDate, "{0:d}", new { @class = "form-control datepicker" })
         </div>
     </div>
-    <div class="form-group">
+    @*<div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <div class="checkbox">
                 <label>
+                    @Html.CheckBoxFor(x => x.FormModel.OnlyWithElectronicRegistration)
                     <input type="checkbox" name="OnlyWithElectronicRegistration" data-bind="checked: input.onlyWithElectronicRegistration">
                     Only trains with electronic registration
                 </label>
             </div>
         </div>
-    </div>
+    </div>*@
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-md-10">
-            <button type="button" class="btn btn-default" data-bind="click: cancel">Cancel</button>
+            <button type="button" class="btn btn-default">Cancel</button>
             <button type="submit" class="btn btn-primary">Continue</button>
         </div>
     </div>

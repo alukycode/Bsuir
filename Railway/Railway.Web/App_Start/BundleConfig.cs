@@ -7,28 +7,26 @@ namespace Railway.Web
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/lib/jquery-{version}.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/lib/jquery-{version}.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/lib/jquery.validate*"));
+            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include("~/Scripts/lib/jquery.validate*"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/lib/modernizr-*"));
+            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include("~/Scripts/lib/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/lib/bootstrap.js",
+                      "~/Scripts/lib/bootstrap-datepicker.js",
+                      "~/Scripts/lib/bootstrap-datepicker.ru.min.js",
                       "~/Scripts/lib/respond.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
-                      "~/Scripts/lib/knockout-{version}.js"));
+            bundles.Add(new ScriptBundle("~/bundles/knockout").Include("~/Scripts/lib/knockout-{version}.js"));
 
             bundles.Add(new StyleBundle("~/Styles/css").Include(
-                      ////"~/Styles/bootswatch-paper.css",
-                      "~/Styles/bootstrap.css",
-                      ////"~/Styles/bootstrap-theme.css",
+                      ////"~/Styles/lib/bootswatch-paper.css",
+                      "~/Styles/lib/bootstrap.css",
+                      "~/Styles/lib/bootstrap-datepicker3.css",
                       "~/Styles/site.css"));
         }
     }

@@ -5,38 +5,32 @@ namespace Railway.Web.Models.Railway
 {
     public class SelectCarViewModel
     {
-        public string StartStationName { get; set; }
+        public IList<CarTypeData> CarTypes { get; set; }
 
-        public string DestinationStationName { get; set; }
+        public IList<CarData> Cars { get; set; }
 
-        public int TrainId { get; set; }
-
-        public string TrainNumber { get; set; }
-
-        public DateTime DepartureTime { get; set; }
-
-        public DateTime ArrivalTime { get; set; }
-
-        public TimeSpan TripDuration { get; set; }
-
-        public IList<CarTypesData> CarTypes { get; set; }
-
-        public class CarTypesData
+        public class CarData
         {
+            public int CarId { get;  set;}
+
+            public int CarTypeId { get;  set;}
+
+            public int Index { get; set; }
+
+            public int SeatCount { get; set; }
+
+            public IList<int> SeatIndexes { get; set; }
+        }
+
+        public class CarTypeData
+        {
+            public int CarTypeId { get; set; }
+
             public string CarTypeName { get; set; }
 
-            public int Cost { get; set; }
-
-            public IList<CarData> Cars { get; set; }
-
-            public class CarData
-            {
-                public int Index { get; set; }
-
-                public int SeatCount { get; set; }
-
-                public IList<int> SeatIndexes { get; set; }
-            }
+            public double Cost { get; set; }
         }
+
+        public SelectCarFormModel FormModel { get; set; }
     }
 }

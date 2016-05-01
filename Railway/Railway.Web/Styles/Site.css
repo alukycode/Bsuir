@@ -22,3 +22,6 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+.js-top10-seats, .js-all-seats { cursor: pointer; }

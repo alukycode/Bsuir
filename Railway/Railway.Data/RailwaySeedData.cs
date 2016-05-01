@@ -5,7 +5,7 @@ using Railway.Data.Entities;
 
 namespace Railway.Data
 {
-    public class RailwaySeedData : DropCreateDatabaseAlways<RailwayContext>
+    public class RailwaySeedData : DropCreateDatabaseIfModelChanges<RailwayContext>
     {
         protected override void Seed(RailwayContext context)
         {
@@ -244,7 +244,10 @@ namespace Railway.Data
                 for (var routeId = 1; routeId <= 8; routeId++)
                 {
                     // чётные обратные маршруты на два часа позже
-                    var startDateTime = routeId % 2 == 0 ? DateTime.Now.AddHours(2) : DateTime.Now;
+                    var startDateTime = routeId % 2 == 0
+                        ? DateTime.Now.AddDays(precalculatedDays).AddHours(2)
+                        : DateTime.Now.AddDays(precalculatedDays);
+
                     result.Add(new DailyRoute { RouteId = routeId, StartDateTime = startDateTime });
                 }
             }

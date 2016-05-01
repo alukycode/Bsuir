@@ -4,24 +4,28 @@
     ViewBag.Title = "SelectCar";
 }
 
+@section Scripts {
+    <script src="~/Scripts/select-car.js"></script>
+}
+
 <ol class="breadcrumb">
     <li>Route</li>
     <li>Train</li>
     <li class="active">Car</li>
-    <li>Passengers</li>
 </ol>
 
 <h2>Information about cars</h2>
 
-<div>Passenger's route: @Model.StartStationName - @Model.DestinationStationName</div>
-<div>Train: @Model.TrainNumber</div>
+<form method="post">
+    @Html.HiddenFor(x => x.FormModel.StartStationId)
+    @Html.HiddenFor(x => x.FormModel.DestinationStationId)
+    @Html.HiddenFor(x => x.FormModel.DailyRouteId)
 
-<div>
     @foreach (var carType in Model.CarTypes)
     {
         <div class="col-sm-2">
             <div>@carType.CarTypeName</div>
-            <div>@carType.Cost</div>
+            <div class="text-danger">@carType.Cost</div>
         </div>
         <div class="col-sm-10">
             <table class="table table-bordered">
@@ -31,23 +35,38 @@
                     <th>available numbers of seats</th>
                 </tr>
 
-                @foreach (var car in carType.Cars)
+                @foreach (var car in Model.Cars.Where(x => x.CarTypeId == carType.CarTypeId))
                 {
                     <tr>
-                        <td>@car.Index</td>
+                        <td>
+                            <label>
+                                @Html.RadioButtonFor(x => x.FormModel.CarId, car.CarId)
+                                @car.Index
+                            </label>
+                        </td>
                         <td>@car.SeatCount</td>
                         <td>
-                            @foreach (var seatIndex in car.SeatIndexes)
-                            {
-                                <span>@seatIndex</span>
-                            }
+                            <span class="js-top10-seats">
+                                @foreach (var seatIndex in car.SeatIndexes.Take(10))
+                                {
+                                    @(seatIndex + " ");
+                                }
+                                <span class="text-info">...</span>
+                            </span>
+                            <span class="js-all-seats" style="display: none">
+                                @foreach (var seatIndex in car.SeatIndexes)
+                                {
+                                    @(seatIndex + " ");
+                                }
+                                <span class="text-info">Show top 10</span>
+                            </span>
                         </td>
                     </tr>
                 }
             </table>
         </div>
     }
-</div>
 
-<button class="btn btn-default">To the beginning</button>
-<button class="btn btn-primary">Continue</button>
+    <button type="button" class="btn btn-default">To the beginning</button>
+    <button type="submit" class="btn btn-primary">Continue</button>
+</form>

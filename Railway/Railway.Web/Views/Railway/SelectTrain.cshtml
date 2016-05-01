@@ -8,53 +8,56 @@
     
     <li>Route</li>
     <li class="active">Train</li>
-    <li>Car</li>
-    <li>Passengers</li>
 </ol>
 
 <h2>Select the train</h2>
 
-<div>Passenger's route: @Model.StartStationName - @Model.DestionationStationName</div>
-<div>Departure date: @Model.DepartureDate</div>
-
-<div class="table-responsive">
-    <table class="table table-bordered">
-        <tr>
-            <th>X</th>
-            <th>Train</th>
-            <th>Departure</th>
-            <th>Arrival</th>
-            <th>Point-to-point time</th>
-            @foreach (var carTypeName in Model.Trains.SelectMany(x => x.Cars).Select(x => x.CarTypeName).Distinct())
-            {
-                <th>@carTypeName</th>
-            }
-        </tr>
-        @foreach (var train in Model.Trains)
-        {
+@*<div>Passenger's route: @Model.StartStationName - @Model.DestionationStationName</div>
+<div>Departure date: @Model.DepartureDate</div>*@
+<form method="post">
+    @Html.HiddenFor(x => x.FormModel.StartStationId)
+    @Html.HiddenFor(x => x.FormModel.DestinationStationId)
+    <div class="table-responsive">
+        <table class="table table-bordered">
             <tr>
-                <td>
-                    @*<div class="checkbox">
-                        <label>*@
-                    <input type="checkbox">
-                    @*</label>
-                        </div>*@
-                </td>
-                <td>@train.TrainNumber</td>
-                <td>@train.DepartureTime</td>
-                @foreach (var car in train.Cars)
+                <th>Train</th>
+                <th>Departure</th>
+                <th>Arrival</th>
+                <th>Point-to-point time</th>
+                @foreach (var carType in Model.CarTypes)
                 {
-                    <td>
-                        @car.AvailableSeatCount
-                        <br />
-                        <span class="text-danger">@car.Cost</span>
-                    </td>
-                    
+                    <th>@carType.TypeName</th>
                 }
             </tr>
-        }
-    </table>
-</div>
+            @foreach (var train in Model.Trains)
+            {
+                <tr>
+                    <td>
+                        <label>
+                            @Html.RadioButtonFor(x => x.FormModel.DailyRouteId, train.DailyRouteId)
+                            @train.TrainNumber
+                        </label>
+                    </td>
+                    <td>@train.DepartureTime.ToShortTimeString()</td>
+                    <td>@train.ArrivalTime</td>
+                    <td>@train.TripTime</td>
+                    @foreach (var carType in Model.CarTypes)
+                    {
+                        var car = @train.Cars.FirstOrDefault(x => x.CarTypeName == carType.TypeName);
+                        <td>
+                            @if (car != null)
+                            {
+                                @car.AvailableSeatCount
+                                <br/>
+                                <span class="text-danger">@car.Cost</span>
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
+    </div>
 
-<button class="btn btn-default">To the beginning</button>
-<button class="btn btn-primary">Continue</button>
+    <button type="button" class="btn btn-default">To the beginning</button>
+    <button type="submit" class="btn btn-primary">Continue</button>
+</form>
