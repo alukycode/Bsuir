@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Railway.Data;
 using Railway.Data.Entities;
 using Railway.Data.Services;
 using Railway.Web.Models;
@@ -172,7 +173,7 @@ namespace Railway.Web.Controllers
                 FormModel = new SelectCarFormModel
                 {
                     DailyRouteId = request.DailyRouteId,
-                    StartStationId = request.DestinationStationId,
+                    StartStationId = request.StartStationId,
                     DestinationStationId = request.DestinationStationId,
                 }
             };
@@ -200,9 +201,100 @@ namespace Railway.Web.Controllers
         [HttpGet]
         public ActionResult SelectPassenger(SelectPassengerRequestModel request)
         {
-            var passengers = railwayService.GetPassengers();
-            var model = new SelectPassengerViewModel();
+            var passengers = railwayService.GetPassengers(Constants.DefaultUserId)
+                .Select(x => new SelectPassengerViewModel.PassengerData
+                    {
+                        FirstName = x.FirstName,
+                        LastName = x.LastName,
+                        DocumentTypeId = x.IdentificationTypeId,
+                        DocumentTypeName = x.IdentificationType.Name,
+                        DocumentNumber = x.IdentificationNumber
+                    }).ToList();
+
+            var documentTypes = railwayService.GetIdentificationTypes()
+                .Select(x => new SelectPassengerViewModel.IdentificationTypeData
+                    {
+                        Id = x.IdentificationTypeId,
+                        Name = x.Name
+                    }).ToList();
+
+            var availableSeats = railwayService.GetAvailableSeatNumbers(request.CarId);
+
+            var model = new SelectPassengerViewModel
+            {
+                SavedPassengers = passengers,
+                DocumentTypes = documentTypes,
+                MinSeat = availableSeats.Min(),
+                MaxSeat = availableSeats.Max(),
+                SubmitUrl = Url.Action("SelectPassenger"),
+                DailyRouteId = request.DailyRouteId,
+                CarId = request.CarId,
+                StartStationId = request.StartStationId,
+                DestinationStationId = request.DestinationStationId
+            };
+
             return View(model);
+        }
+
+        [HttpPost]
+        public JsonResult SelectPassenger(SelectPassengerFormModel form)
+        {
+            var response = new SelectPassengerResponseModel();
+            var passenger = railwayService.SavePassenger(new Passenger
+            {
+                FirstName = form.FirstName,
+                LastName = form.LastName,
+                IdentificationTypeId = form.DocumentTypeId,
+                IdentificationNumber = form.DocumentNumer,
+                UserId = Constants.DefaultUserId
+            });
+
+            var order = railwayService.CreateOrder(form.DailyRouteId, form.StartStationId, form.DestinationStationId, form.CarId, passenger.PassengerId, form.MinSeat, form.MaxSeat);
+            if (order == null)
+            {
+                response.Success = false;
+                response.Message = "Заказ не был создан. Возможно запрашиваемые места уже закончились";
+            }
+            else
+            {
+                response.Success = true;
+                response.RedirectUrl = Url.Action("ConfirmOrder", new { orderId = order.OrderId });
+            }
+
+            return Json(response);
+        }
+
+        public ActionResult ConfirmOrder(int orderId)
+        {
+            var order = railwayService.GetOrder(orderId);
+            var orderPassenger = order.OrderPassengers.First();
+            var orderPassengersData = new List<ConfirmOrderViewModel.PassengerData>
+            {
+                new ConfirmOrderViewModel.PassengerData
+                {
+                    FirstName = orderPassenger.Passenger.FirstName,
+                    LastName = orderPassenger.Passenger.LastName,
+                    DocumentTypeName = orderPassenger.Passenger.IdentificationType.Name,
+                    DocumentNumber = orderPassenger.Passenger.IdentificationNumber,
+                    SeatIndex = orderPassenger.SeatIndex,
+                    CarIndex = orderPassenger.Car.CarIndex
+                }
+            };
+
+            var viewModel = new ConfirmOrderViewModel
+            {
+                OrderId = order.OrderId,
+                OrderDate = order.OrderDate,
+                TripStartDate = order.TripStartDate,
+                TripDestinationDate = order.TripDestinationDate,
+                TrainNumber = order.TrainNumber,
+                TotalCost = order.TotalCost,
+                TripStartStationName = order.TripStartStation.StationName,
+                TripDestinationStationName = order.TripDestinationStation.StationName,
+                OrderPassengers = orderPassengersData,
+            };
+
+            return View(viewModel);
         }
     }
 }

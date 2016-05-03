@@ -54,6 +54,7 @@
     <Compile Include="Entities\CarType.cs" />
     <Compile Include="Entities\DailyRoute.cs" />
     <Compile Include="Entities\Distance.cs" />
+    <Compile Include="Entities\IdentificationType.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\OrderPassenger.cs" />
     <Compile Include="Entities\Passenger.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Entities\Station.cs" />
     <Compile Include="Entities\Train.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RailwayContext.cs" />
     <Compile Include="RailwaySeedData.cs" />

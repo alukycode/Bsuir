@@ -11,6 +11,8 @@ namespace Railway.Data
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Passenger> Passengers { get; set; }
         public virtual DbSet<OrderPassenger> OrderPassengers { get; set; }
+        public virtual DbSet<IdentificationType> IdentificationTypes { get; set; }
+
 
         public virtual DbSet<Car> Cars { get; set; }
         public virtual DbSet<CarType> CarTypes { get; set; }

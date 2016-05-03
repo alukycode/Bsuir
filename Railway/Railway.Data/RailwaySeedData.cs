@@ -9,6 +9,7 @@ namespace Railway.Data
     {
         protected override void Seed(RailwayContext context)
         {
+            context.IdentificationTypes.AddRange(GetIdentificationTypes());
             context.CarTypes.AddRange(GetCarTypes());
             context.Stations.AddRange(GetStations());
             context.SaveChanges();
@@ -296,31 +297,46 @@ namespace Railway.Data
                 new Passenger
                 {
                     UserId = 1,
-                    FullName = "Лукьянов Антон Александрович",
-                    IdentificationType = 2,
+                    LastName = "Лукьянов",
+                    FirstName = "Антон",
+                    IdentificationTypeId = 2,
                     IdentificationNumber = "1234567890"
                 },
                 new Passenger
                 {
                     UserId = 1,
-                    FullName = "Федосеева Татьяна Андреевна",
-                    IdentificationType = 1,
+                    LastName = "Федосеева",
+                    FirstName = "Татьяна",
+                    IdentificationTypeId = 1,
                     IdentificationNumber = "KB16859000"
                 },
                 new Passenger
                 {
                     UserId = 2,
-                    FullName = "Вакульчик Роман Николаевич",
-                    IdentificationType = 1,
+                    LastName = "Вакульчик",
+                    FirstName = "Роман",
+                    IdentificationTypeId = 1,
                     IdentificationNumber = "HB54321000"
                 },
                 new Passenger
                 {
                     UserId = 3,
-                    FullName = "Черногребель Александр Михайлович",
-                    IdentificationType = 1,
+                    LastName = "Черногребель",
+                    FirstName = "Александр",
+                    IdentificationTypeId = 1,
                     IdentificationNumber = "CH1010101"
                 },
+            };
+        }
+
+        private static List<IdentificationType> GetIdentificationTypes()
+        {
+            return new List<IdentificationType>
+            {
+                new IdentificationType { Name = "Паспорт", },
+                new IdentificationType { Name = "Свидетельство о рождении", },
+                new IdentificationType { Name = "Студенческий билет", },
+                new IdentificationType { Name = "Водительское удостоверение", },
             };
         }
     }

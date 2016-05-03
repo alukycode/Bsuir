@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -113,6 +114,12 @@ namespace Railway.Data.Services
             return  car.CarType.SeatCount - context.OrderPassengers.Count(x => x.CarId == car.CarId);
         }
 
+        public IList<int> GetAvailableSeatNumbers(int carId)
+        {
+            var car = context.Cars.Find(carId);
+            return GetAvailableSeatNumbers(car);
+        }
+
         public IList<int> GetAvailableSeatNumbers(Car car)
         {
             var takenSeats = context.OrderPassengers.Where(x => x.CarId == car.CarId).Select(x => x.SeatIndex).ToList();
@@ -121,7 +128,7 @@ namespace Railway.Data.Services
             return result;
         }
 
-        public List<List<string>> GetAvailableRoutes()
+        public IList<List<string>> GetAvailableRoutes()
         {
             var result = new List<List<string>>();
 
@@ -135,6 +142,89 @@ namespace Railway.Data.Services
             }
 
             return result;
+        }
+
+        public IList<Passenger> GetPassengers(int userId)
+        {
+            return context.Passengers.Where(x => x.UserId == userId).ToList();
+        }
+
+        public IList<IdentificationType> GetIdentificationTypes()
+        {
+            return context.IdentificationTypes.ToList();
+        }
+
+        public Passenger SavePassenger(Passenger passenger)
+        {
+            var existingPassenger = context.Passengers.FirstOrDefault(x => x.FirstName == passenger.FirstName
+                && x.LastName == passenger.LastName
+                && x.IdentificationTypeId == passenger.IdentificationTypeId 
+                && x.IdentificationNumber == passenger.IdentificationNumber
+                && x.UserId == passenger.UserId);
+
+            if (existingPassenger == null)
+            {
+                context.Passengers.Add(passenger);
+                context.SaveChanges();
+                return passenger; // после сохранения заполнится PassengerId
+            }
+
+            return existingPassenger;
+        }
+
+        public Order CreateOrder(int dailyRouteId, int startStationId, int destinationStationId, int carId, int passengerId, int minSeat, int maxSeat)
+        {
+            var dailyRoute = context.DailyRoutes.Find(dailyRouteId);
+            var car = context.Cars.Find(carId);
+
+            //todo: lock -> сохранение заказа с указанным местом
+
+            var seatIndex = GetAvailableSeatNumbers(car).FirstOrDefault(x => x >= minSeat && x <= maxSeat);
+
+            if (seatIndex == 0)
+            {
+                return null;
+            }
+
+            var orderPassenger = new OrderPassenger
+            {
+                CarId = car.CarId,
+                Cost = CalculateCost(dailyRoute, startStationId, destinationStationId, car.CarType),
+                PassengerId = passengerId,
+                SeatIndex = seatIndex
+            };
+
+            var orderPassengers = new List<OrderPassenger> { orderPassenger };
+
+            var order = new Order
+            {
+                UserId = Constants.DefaultUserId,
+                TrainNumber = dailyRoute.Route.Train.TrainNumber,
+                DailyRouteId = dailyRoute.DailyRouteId,
+                TripStartStationId = startStationId,
+                TripDestinationStationId = destinationStationId,
+                TripStartDate = CalculateArrivalDepartureTime(dailyRoute, startStationId),
+                TripDestinationDate = CalculateArrivalDepartureTime(dailyRoute, destinationStationId),
+                OrderDate = DateTime.Now,
+                TotalCost = orderPassengers.Select(x => x.Cost).Sum(),
+                OrderPassengers = orderPassengers
+            };
+
+            context.Orders.Add(order);
+
+            context.SaveChanges();
+
+            return order;
+        }
+
+        public Order GetOrder(int orderId)
+        {
+            return
+                context.Orders.Where(x => x.OrderId == orderId)
+                    .Include(x => x.OrderPassengers.Select(y => y.Car))
+                    .Include(x => x.TripStartStation)
+                    .Include(x => x.TripDestinationStation)
+                    .FirstOrDefault();
         }
     }
 }

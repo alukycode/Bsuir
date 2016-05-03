@@ -183,18 +183,22 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RailwayController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Home\IndexViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Railway\ConfirmOrderViewModel.cs" />
     <Compile Include="Models\Railway\SelectCarFormModel.cs" />
     <Compile Include="Models\Railway\SelectCarRequestModel.cs" />
     <Compile Include="Models\Railway\SelectCarViewModel.cs" />
     <Compile Include="Models\Railway\SelectPassengerFormModel.cs" />
     <Compile Include="Models\Railway\SelectPassengerRequestModel.cs" />
+    <Compile Include="Models\Railway\SelectPassengerResponseModel.cs" />
     <Compile Include="Models\Railway\SelectPassengerViewModel.cs" />
     <Compile Include="Models\Railway\SelectRouteFormModel.cs" />
     <Compile Include="Models\Railway\SelectRouteViewModel.cs" />
@@ -211,6 +215,7 @@
     <Content Include="Scripts\lib\knockout-3.4.0.debug.js" />
     <Content Include="Scripts\lib\knockout-3.4.0.js" />
     <Content Include="Scripts\select-car.js" />
+    <Content Include="Scripts\select-passenger.js" />
     <Content Include="Scripts\select-route.js" />
     <Content Include="Styles\lib\bootstrap-datepicker.css" />
     <Content Include="Styles\lib\bootstrap-datepicker.min.css" />
@@ -267,6 +272,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Railway\SelectRoute.cshtml" />
+    <Content Include="Views\Railway\ConfirmOrder.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="Views\Railway\SelectCar.cshtml" />
     <None Include="Views\Railway\SelectPassenger.cshtml" />
     <None Include="Views\Railway\SelectTrain.cshtml" />

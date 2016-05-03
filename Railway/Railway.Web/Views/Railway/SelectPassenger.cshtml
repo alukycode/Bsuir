@@ -4,6 +4,11 @@
     ViewBag.Title = "SelectPassenger";
 }
 
+@section Scripts {
+    <script>var ServerModel = (@Html.Raw(Json.Encode(Model)));</script>
+    <script src="~/Scripts/select-passenger.js"></script>
+}
+
 <ol class="breadcrumb">
     <li>Route</li>
     <li>Train</li>
@@ -11,65 +16,69 @@
     <li class="active">Passengers</li>
 </ol>
 
-<h2>Select passengers</h2>
+<h2>Select passenger</h2>
 
+<form data-bind="submit: submitForm" class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-sm-2">Saved passengers</label>
+        <div class="col-sm-10">
+            <table class="table table-bordered" data-bind="foreach: availablePassengers">
+                <tr data-bind="click: $root.selectPassenger">
+                    <td data-bind="text: LastName"></td>
+                    <td data-bind="text: FirstName"></td>
+                    <td data-bind="text: DocumentTypeName"></td>
+                    <td data-bind="text: DocumentNumber"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Last name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" data-bind="value: lastName"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">First name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" data-bind="value: firstName"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Document type</label>
+            <div class="col-sm-10">
+                <select class="form-control"
+                        data-bind="options: availableDocumentTypes, optionsText: 'Name', optionsValue: 'Id', value: documentType">
+                </select>
+            </div>
 
-<form class="form-horizontal">
-    <div class="form-group">
-        <label class="control-label col-sm-2">Number of passengers:</label>
-        <div class="col-sm-10">
-            <input type="number" class="form-control"/>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="button" class="btn btn-default">Choose a passenger from earlier accomplished orders</button>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-sm-2">Last name</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control"/>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-sm-2">First name</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-sm-2">Document type</label>
-        <div class="col-sm-5">
-            <input type="text" class="form-control"/>
-        </div>
-        <div class="col-sm-5">
-            <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Dropdown
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                </ul>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Document number</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" data-bind="value: documentNumber"/>
             </div>
         </div>
     </div>
+
     <div class="form-group">
-        <label class="control-label col-sm-2">Document number</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control"/>
+        <label class="control-label col-sm-2">Min. requested seat</label>
+        <div class="col-sm-2">
+            <input type="text" class="form-control" data-bind="value: minSeat"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">Max. requested seat</label>
+        <div class="col-sm-2">
+            <input type="text" class="form-control" data-bind="value: maxSeat"/>
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-md-10">
             <button type="button" class="btn btn-default">Cancel</button>
-            <button type="button" class="btn btn-primary">Continue</button>
+            <button type="submit" class="btn btn-primary">Continue</button>
         </div>
     </div>
 </form>

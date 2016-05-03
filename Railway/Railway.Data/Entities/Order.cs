@@ -15,10 +15,11 @@ namespace Railway.Data.Entities
 
         public DateTime OrderDate { get; set; }
         public DateTime TripStartDate { get; set; }
-        public DateTime TripDestionationDate { get; set; }
+        public DateTime TripDestinationDate { get; set; }
         public string TrainNumber { get; set; }
         public int PaymentSystem { get; set; }
         public bool ElectronicRegistration { get; set; }
+        public double TotalCost { get; set; }
 
         public int DailyRouteId { get; set; }
         public virtual DailyRoute DailyRoute { get; set; }
