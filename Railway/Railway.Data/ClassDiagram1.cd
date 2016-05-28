@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Railway.Data.Entities.Car">
+    <Position X="4.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAACAAAEAAAAKEAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Car.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Railway.Data.Entities.CarType">
+    <Position X="6" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAACAAAAAAAAAABAIAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\CarType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Railway.Data.Entities.DailyRoute">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAEAAAAEAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\DailyRoute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Railway.Data.Entities.Distance">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAEQAAAAAAAAAAAAIAAAAABAAAAAAg=</HashCode>
+      <FileName>Entities\Distance.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Railway.Data.Entities.IdentificationType">
+    <Position X="2.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\IdentificationType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Railway.Data.Entities.Order">
+    <Position X="0.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GSAJCAAAAQAAAAABAQAQEAgQAAAAAAAAAQAAAAAAAgQ=</HashCode>
+      <FileName>Entities\Order.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Railway.Data.Entities.OrderPassenger">
+    <Position X="2.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAEAQAAAAAQQAAAAAAAAABCAAAEAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Entities\OrderPassenger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Railway.Data.Entities.Passenger">
+    <Position X="4.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAEAAAAAAAAAAAAAAAAgAAAEAABCAAAAAAAAAgAg=</HashCode>
+      <FileName>Entities\Passenger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Railway.Data.Entities.Route">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAABAAAAAAAAAAEAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Route.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Railway.Data.Entities.RouteStation">
+    <Position X="2.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAABAAAAAAAEEABAAAAAEAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\RouteStation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Railway.Data.Entities.Station">
+    <Position X="0.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Station.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Railway.Data.Entities.Train">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAQAAAAAAAAAEAAAAAACAAAAAAAAAAQ=</HashCode>
+      <FileName>Entities\Train.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Railway.Data.Entities.User">
+    <Position X="6" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAEAAACQAAAAAAAAAAAgAAAAAAAACAAAQIAAAAAg=</HashCode>
+      <FileName>Entities\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
